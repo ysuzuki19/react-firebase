@@ -11,7 +11,7 @@ const es_config = {
     file: 'dist/index.es.js',
     format: 'es',
   },
-  // external: ['react'],
+  external: ['react'],
   plugins: [
     typescript(),
     babel({
@@ -38,7 +38,7 @@ const umd_config = {
     name: 'LibraryName',
     exports: 'named',
     indent: false,
-    // globals: { react: 'react' },
+    globals: { react: 'react' },
   },
   // external: ['react'],
   plugins: [
