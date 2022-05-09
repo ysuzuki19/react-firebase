@@ -1,29 +1,115 @@
-# npm package template
+# react-firebase
 
-Template repository for npm package
+react hooks library for Firebase SDK.
 
-- typescript
-- 👁️public npm package
-- auto publish with github workflow
-- rollup
-- (optional) for react
+# install
 
-# setup
+```bash
+npm i firebase @ysuzuki19/react-firebase
+```
 
-- exec `npm init`
-- set `NPM_TOKEN` in your github repository (in Github, `Settings/Secrets/Actions/New repository secret`)
-- rewrite `LibraryName` to your library-name in `rollup.config.js`.
+# How to Use
 
-## Optional
+## set Provider
 
-- if you develop react library, please uncomment some `external: ['react']`,`globals: { react: 'react' }` in `rollup.config.js`
-- replace `LICENSE`
+```tsx
+import { FirebaseProvider } from '@ysuzuki19/react-firebase';
+import React from 'react';
+import { createRoot } from 'react-dom/client';
 
-# how to publish
+import App from './App';
+import reportWebVitals from './reportWebVitals';
 
-1. click `Create a new release`
-1. click `Choose a tag` and create new tag for your release
-1. write `Release title`
-1. write `Describe this release`
-1. click `Publish release`
-1. 🚀 auto start workflow and publish!!
+// see https://firebase.google.com/docs/web/setup
+export const firebaseConfig = {
+  apiKey: '<your-api-key>',
+  authDomain: '<your-auth-domain>',
+  projectId: '<your-project-id>',
+  storageBucket: '<your-bucket>',
+  messagingSenderId: '<your-messaging-sender-id>',
+  appId: '<your-app-id>',
+};
+
+const container = document.getElementById('root');
+const root = createRoot(container as HTMLElement);
+root.render(
+  <React.StrictMode>
+    <FirebaseProvider config={firebaseConfig}>
+      <App />
+    </FirebaseProvider>
+  </React.StrictMode>
+);
+
+reportWebVitals();
+```
+
+## Use with hooks
+
+After the set provider.
+
+you can use `useFirebase()` in your react componend.
+
+```tsx
+function App() {
+  const { auth, firestore } = useFirebase();
+
+  /** your process */
+
+  return <p>hoge</p>;
+}
+```
+
+Currently, `react-firebase` only support following modules.
+
+| hook           | returned                          |
+| -------------- | --------------------------------- |
+| useFirebase()  | all supported modules(with named) |
+| useApp()       | FirebaseApp                       |
+| useAuth()      | Auth                              |
+| useFirestore() | Firestore                         |
+
+## Switch to emulator in dev (advanced)
+
+```tsx
+import { FirebaseProvider } from '@ysuzuki19/react-firebase';
+import React from 'react';
+import { createRoot } from 'react-dom/client';
+
+import App from './App';
+import reportWebVitals from './reportWebVitals';
+
+export const firebaseConfig = {
+  apiKey: '<your-api-key>',
+  authDomain: '<your-auth-domain>',
+  projectId: '<your-project-id>',
+  storageBucket: '<your-bucket>',
+  messagingSenderId: '<your-messaging-sender-id>',
+  appId: '<your-app-id>',
+};
+
+export const emulatorsConfig = {
+  firestore: { host: 'localhost', port: 8080 },
+  auth: { url: 'http://localhost:9099' },
+};
+
+const container = document.getElementById('root');
+const root = createRoot(container as HTMLElement);
+root.render(
+  <React.StrictMode>
+    <FirebaseProvider
+      config={firebaseConfig}
+      emulators={
+        process.env.NODE_ENV === 'development' ? emulatorsConfig : undefined
+      }
+    >
+      <App />
+    </FirebaseProvider>
+  </React.StrictMode>
+);
+
+reportWebVitals();
+```
+
+## License
+
+MIT
