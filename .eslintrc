@@ -1,0 +1,50 @@
+{
+  "extends": [],
+  "plugins": ["import"],
+  "settings": {
+    "import/resolver": {
+      "typescript": {
+        "alwaysTryTypes": true
+      }
+    }
+  },
+  "rules": {},
+  "overrides": [
+    {
+      "files": ["*.ts", "*.tsx"],
+      "parser": "@typescript-eslint/parser",
+      "plugins": ["@typescript-eslint"],
+      "extends": ["plugin:@typescript-eslint/recommended"],
+      "parserOptions": {
+        "sourceType": "module",
+        "ecmaVersion": 2020,
+        "ecmaFeatures": {
+          "jsx": true
+        }
+      },
+      "rules": {}
+    },
+    {
+      "files": ["**/*.{ts,tsx}"],
+      "rules": {
+        "import/order": [
+          "error",
+          {
+            "groups": [
+              "builtin",
+              "external",
+              ["parent", "sibling"],
+              "index",
+              "object",
+              "type"
+            ],
+            "alphabetize": {
+              "order": "asc"
+            },
+            "newlines-between": "always"
+          }
+        ]
+      }
+    }
+  ]
+}

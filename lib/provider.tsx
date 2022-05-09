@@ -1,12 +1,12 @@
-import React from 'react';
 import { FirebaseApp, FirebaseOptions, initializeApp } from 'firebase/app';
+import { Auth, getAuth, connectAuthEmulator } from 'firebase/auth';
 import {
   Firestore,
   getFirestore,
   connectFirestoreEmulator,
   EmulatorMockTokenOptions,
 } from 'firebase/firestore';
-import { Auth, getAuth, connectAuthEmulator } from 'firebase/auth';
+import React from 'react';
 
 export interface Firebase {
   app: FirebaseApp;
