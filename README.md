@@ -1,5 +1,7 @@
 # react-firebase
 
+[![npm](https://img.shields.io/npm/v/@ysuzuki19/react-firebase?label=%40ysuzuki19%2Freact-firebase)](https://www.npmjs.com/package/@ysuzuki19/react-firebase)
+
 react hooks library for Firebase SDK.
 
 # install
