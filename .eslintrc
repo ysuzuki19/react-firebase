@@ -1,5 +1,9 @@
 {
   "extends": [],
+  "parserOptions": {
+    "sourceType": "module",
+    "ecmaVersion": 2015
+  },
   "plugins": ["import"],
   "settings": {
     "import/resolver": {
@@ -25,7 +29,7 @@
       "rules": {}
     },
     {
-      "files": ["**/*.{ts,tsx}"],
+      "files": ["**/*.{js,ts,tsx}"],
       "rules": {
         "import/order": [
           "error",

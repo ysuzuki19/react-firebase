@@ -1,9 +1,13 @@
+import babel from '@rollup/plugin-babel';
 import typescript from '@rollup/plugin-typescript';
 import dts from 'rollup-plugin-dts';
-import babel from '@rollup/plugin-babel';
 import { terser } from 'rollup-plugin-terser';
 
-const entry = './index.ts';
+const entry = './index.tsx';
+
+const babelHelpers = 'bundled';
+const extensions = ['.tsx'];
+const presets = ['@babel/preset-react'];
 
 const es_config = {
   input: entry,
@@ -11,12 +15,13 @@ const es_config = {
     file: 'dist/index.es.js',
     format: 'es',
   },
-  external: ['react'],
+  external: ['react', 'firebase'],
   plugins: [
     typescript(),
     babel({
-      babelHelpers: 'bundled',
-      extensions: ['.ts'],
+      babelHelpers,
+      extensions,
+      presets,
     }),
   ],
 };
@@ -35,18 +40,19 @@ const umd_config = {
   output: {
     file: 'dist/index.umd.min.js',
     format: 'umd',
-    name: 'LibraryName',
+    name: 'ReactFirebase',
     exports: 'named',
     indent: false,
-    globals: { react: 'react' },
+    globals: { react: 'react', firebase: 'firebase' },
   },
-  // external: ['react'],
+  external: ['react', 'firebase'],
   plugins: [
     typescript(),
     babel({
-      babelHelpers: 'bundled',
-      extensions: ['.ts'],
       exclude: 'node_modules/**',
+      babelHelpers,
+      extensions,
+      presets,
     }),
     terser(),
   ],
